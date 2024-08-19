@@ -1,9 +1,18 @@
+import { Routes, Route } from "react-router-dom";
+import styles from "./App.module.css";
+import Homepage from "./components/Homepage/Homepage";
+import Navbar from "./components/NavBar/Navbar";
+
 function App() {
   return (
-    <>
-      <h1>Twidayoo Bot</h1>
-      <p>Howdy</p>
-    </>
+    <div className={styles.app}>
+      <Navbar />
+      <main>
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+        </Routes>
+      </main>
+    </div>
   );
 }
 
