@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import styles from "./Navbar.module.css";
+import useAuth from "../../hooks/useAuth";
 
 export default function Navbar() {
+  const { currentUser } = useAuth();
+
   return (
     <nav className={styles.navbar}>
       <h1>
@@ -9,7 +12,7 @@ export default function Navbar() {
           Twidayoo Bot
         </Link>
       </h1>
-      <p>placeholder...</p>
+      {currentUser?.user ? <p>{currentUser.user.displayName}</p> : null}
     </nav>
   );
 }

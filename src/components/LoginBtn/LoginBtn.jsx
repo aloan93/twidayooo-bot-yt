@@ -1,11 +1,15 @@
 import { GoogleAuthProvider } from "firebase/auth";
 import useAuth from "../../hooks/useAuth";
+import { useState } from "react";
+import Loader from "../Loader/Loader";
 
 export default function LoginBtn() {
   const { setCurrentUser, logIn } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
 
   function handleLogIn(e) {
     e.preventDefault();
+    setIsLoading(true);
     logIn()
       .then((result) => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
@@ -14,6 +18,8 @@ export default function LoginBtn() {
         const user = result.user;
 
         setCurrentUser({ token, user });
+
+        setIsLoading(false);
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -24,8 +30,12 @@ export default function LoginBtn() {
         const credential = GoogleAuthProvider.credentialFromError(error);
 
         console.log({ errorCode, errorMessage, email, credential });
+
+        setIsLoading(false);
       });
   }
 
-  return <button onClick={handleLogIn}>Login</button>;
+  return (
+    <>{isLoading ? <Loader /> : <button onClick={handleLogIn}>Login</button>}</>
+  );
 }
