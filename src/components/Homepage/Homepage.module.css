@@ -5,8 +5,5 @@
   flex-direction: column;
   align-items: center;
   margin: 100px 10%;
-}
-
-.title {
-  color: var(--colour-text);
+  gap: 50px;
 }

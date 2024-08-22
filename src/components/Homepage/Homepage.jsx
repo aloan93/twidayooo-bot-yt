@@ -1,20 +1,58 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import LoginBtn from "../LoginBtn/LoginBtn";
 import LogoutBtn from "../LogoutBtn/LogoutBtn";
 import styles from "./Homepage.module.css";
+import { youtubeApi } from "../../api/api";
+import Loader from "../Loader/Loader";
 
 export default function Homepage() {
   const { currentUser } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+  const [liveStream, setLiveStream] = useState(null);
+  const [refreshLiveCheck, setRefreshLiveCheck] = useState(false);
 
   useEffect(() => {
-    console.log(currentUser);
-  }, [currentUser]);
+    if (currentUser?.user) {
+      setIsLoading(true);
+      youtubeApi
+        .get(`liveBroadcasts`, {
+          headers: { Authorization: `Bearer ${currentUser.token}` },
+          params: { broadcastStatus: "active" },
+        })
+        .then(({ data: { items } }) => {
+          console.log(items);
+          items.length > 0 ? setLiveStream(items[0]) : setLiveStream(null);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setIsLoading(false);
+        });
+    }
+  }, [currentUser, refreshLiveCheck]);
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Have a nice day</h2>
-      {currentUser?.user ? <LogoutBtn /> : <LoginBtn />}
+      {currentUser?.user ? (
+        <>
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <>
+              <div>
+                {liveStream ? <p>Currently Live!</p> : <p>Not live...</p>}
+                <button onClick={() => setRefreshLiveCheck(!refreshLiveCheck)}>
+                  Refresh
+                </button>
+              </div>
+              <LogoutBtn />
+            </>
+          )}
+        </>
+      ) : (
+        <LoginBtn />
+      )}
     </div>
   );
 }
