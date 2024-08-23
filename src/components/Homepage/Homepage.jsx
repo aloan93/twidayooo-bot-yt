@@ -51,13 +51,13 @@ export default function Homepage() {
                     ? `🔴 Currently Live!\n${liveStream.snippet.title}`
                     : `Not Currently Live... 😴`}
                 </p>
-                {liveStream ? <LiveChatQuiz liveStream={liveStream} /> : null}
                 <button
                   className={styles.refreshBtn}
                   onClick={() => setRefreshLiveCheck(!refreshLiveCheck)}>
                   Refresh
                 </button>
               </div>
+              {liveStream ? <LiveChatQuiz liveStream={liveStream} /> : null}
               <LogoutBtn />
             </>
           )}
