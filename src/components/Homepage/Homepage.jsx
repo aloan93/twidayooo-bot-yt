@@ -40,9 +40,15 @@ export default function Homepage() {
             <Loader />
           ) : (
             <>
-              <div>
-                {liveStream ? <p>Currently Live!</p> : <p>Not live...</p>}
-                <button onClick={() => setRefreshLiveCheck(!refreshLiveCheck)}>
+              <div className={styles.statusContainer}>
+                <p className={styles.statusText}>
+                  {liveStream
+                    ? `🔴 Currently Live!\n${liveStream.snippet.title}`
+                    : `Not Currently Live... 😴`}
+                </p>
+                <button
+                  className={styles.refreshBtn}
+                  onClick={() => setRefreshLiveCheck(!refreshLiveCheck)}>
                   Refresh
                 </button>
               </div>

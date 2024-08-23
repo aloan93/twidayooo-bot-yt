@@ -7,3 +7,56 @@
   margin: 100px 10%;
   gap: 50px;
 }
+
+.statusContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.statusText {
+  color: var(--colour-text);
+  font-size: 20px;
+  font-weight: 600;
+  white-space: pre-wrap;
+  text-align: center;
+  line-height: 150%;
+}
+
+.refreshBtn {
+  padding: 0.6em 1.35em;
+  border: 1px solid var(--colour-text);
+  position: relative;
+  overflow: hidden;
+  background-color: transparent;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 12px;
+  z-index: 1;
+  transition: 0.3s;
+  color: var(--colour-text);
+}
+
+.refreshBtn::before {
+  content: "";
+  width: 0;
+  height: 300%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  background: var(--colour-text);
+  transition: 0.5s ease;
+  display: block;
+  z-index: -1;
+}
+
+.refreshBtn:hover::before {
+  width: 105%;
+}
+
+.refreshBtn:hover {
+  cursor: pointer;
+  color: var(--colour-dark);
+}

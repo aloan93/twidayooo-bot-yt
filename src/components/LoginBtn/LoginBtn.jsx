@@ -2,6 +2,7 @@ import { GoogleAuthProvider } from "firebase/auth";
 import useAuth from "../../hooks/useAuth";
 import { useState } from "react";
 import Loader from "../Loader/Loader";
+import styles from "./LoginBtn.module.css";
 
 export default function LoginBtn() {
   const { setCurrentUser, logIn } = useAuth();
@@ -36,6 +37,14 @@ export default function LoginBtn() {
   }
 
   return (
-    <>{isLoading ? <Loader /> : <button onClick={handleLogIn}>Login</button>}</>
+    <>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <button className={styles.loginBtn} onClick={handleLogIn}>
+          Login with Google
+        </button>
+      )}
+    </>
   );
 }

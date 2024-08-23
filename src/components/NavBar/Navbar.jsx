@@ -12,7 +12,9 @@ export default function Navbar() {
           Twidayoo Bot
         </Link>
       </h1>
-      {currentUser?.user ? <p>{currentUser.user.displayName}</p> : null}
+      {currentUser?.user ? (
+        <p className={styles.loggedInUser}>{currentUser.user.displayName}</p>
+      ) : null}
     </nav>
   );
 }

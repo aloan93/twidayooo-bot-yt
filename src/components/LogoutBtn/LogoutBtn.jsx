@@ -1,6 +1,7 @@
 import { useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import Loader from "../Loader/Loader";
+import styles from "./LogoutBtn.module.css";
 
 export default function LogoutBtn() {
   const { logOut, setCurrentUser } = useAuth();
@@ -24,7 +25,13 @@ export default function LogoutBtn() {
 
   return (
     <>
-      {isLoading ? <Loader /> : <button onClick={handleLogOut}>Logout</button>}
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <button className={styles.logoutBtn} onClick={handleLogOut}>
+          Logout
+        </button>
+      )}
     </>
   );
 }
