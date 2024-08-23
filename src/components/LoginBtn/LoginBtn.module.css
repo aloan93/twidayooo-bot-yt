@@ -1,0 +1,37 @@
+@import "../../vars.css";
+
+.loginBtn {
+  padding: 0.8em 1.8em;
+  border: 2px solid var(--colour-secondary1);
+  position: relative;
+  overflow: hidden;
+  background-color: transparent;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 16px;
+  z-index: 1;
+  transition: 0.3s;
+  color: var(--colour-secondary1);
+}
+
+.loginBtn::before {
+  content: "";
+  width: 0;
+  height: 500%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  background: var(--colour-primary1);
+  transition: 0.5s ease;
+  display: block;
+  z-index: -1;
+}
+
+.loginBtn:hover::before {
+  width: 105%;
+}
+
+.loginBtn:hover {
+  cursor: pointer;
+}

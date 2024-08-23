@@ -2,21 +2,22 @@
 
 .navbar {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: flex-end;
   padding-top: 60px;
   margin: 0 10%;
   padding-bottom: 5px;
-  border-bottom: 1px solid var(--colour-text);
+  border-bottom: 2px solid var(--colour-primary1);
   color: var(--colour-text);
 }
 
 .navLink {
   text-decoration: none;
-  color: var(--colour-text);
+  color: var(--colour-secondary1);
   transition: 0.3s;
 }
 
-.navLink:hover {
-  color: var(--colour-secondary2);
+.loggedInUser {
+  font-size: 20px;
+  color: var(--colour-secondary1);
 }
