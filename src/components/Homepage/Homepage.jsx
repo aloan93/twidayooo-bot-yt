@@ -5,6 +5,7 @@ import LogoutBtn from "../LogoutBtn/LogoutBtn";
 import styles from "./Homepage.module.css";
 import { youtubeApi } from "../../api/api";
 import Loader from "../Loader/Loader";
+import LiveChatQuiz from "../LiveChatQuiz/LiveChatQuiz";
 
 export default function Homepage() {
   const { currentUser } = useAuth();
@@ -18,7 +19,11 @@ export default function Homepage() {
       youtubeApi
         .get(`liveBroadcasts`, {
           headers: { Authorization: `Bearer ${currentUser.token}` },
-          params: { broadcastStatus: "active" },
+          params: {
+            broadcastStatus: "active",
+            key: import.meta.env.VITE_FIREBASE_API_KEY,
+            part: "snippet",
+          },
         })
         .then(({ data: { items } }) => {
           console.log(items);
@@ -46,6 +51,7 @@ export default function Homepage() {
                     ? `🔴 Currently Live!\n${liveStream.snippet.title}`
                     : `Not Currently Live... 😴`}
                 </p>
+                {liveStream ? <LiveChatQuiz liveStream={liveStream} /> : null}
                 <button
                   className={styles.refreshBtn}
                   onClick={() => setRefreshLiveCheck(!refreshLiveCheck)}>
