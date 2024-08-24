@@ -35,7 +35,7 @@ export default function QuizResults({ questionResponses }) {
 
   return (
     <div className={styles.container}>
-      <h2>{question}</h2>
+      <h3>{question}</h3>
       <ul>
         {highToLowAnsers.map((answer, i) => {
           return <li key={i}>{`${answer[0]} - ${answer[1]} times`}</li>;

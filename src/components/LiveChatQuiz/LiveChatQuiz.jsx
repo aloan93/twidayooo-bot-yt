@@ -3,6 +3,7 @@ import { youtubeApi } from "../../api/api";
 import useAuth from "../../hooks/useAuth";
 import styles from "./LiveChatQuiz.module.css";
 import QuizResults from "../QuizResults/QuizResults";
+import Loader from "../Loader/Loader";
 
 export default function LiveChatQuiz({ liveStream }) {
   const { currentUser } = useAuth();
@@ -10,10 +11,12 @@ export default function LiveChatQuiz({ liveStream }) {
   const [timer, setTimer] = useState("");
   const [questionReponses, setQuestionResponses] = useState(null);
   const [pageMarker, setPageMarker] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   function handleQuestion(e) {
     e.preventDefault(e);
     console.log("starting...", question, timer);
+    setIsLoading(true);
     setQuestionResponses(null);
     youtubeApi
       .post(
@@ -53,9 +56,11 @@ export default function LiveChatQuiz({ liveStream }) {
         setQuestionResponses({ question, responses: items });
         setTimer("");
         setQuestion("");
+        setIsLoading(false);
       })
       .catch((error) => {
         console.log("wrong", error);
+        setIsLoading(false);
       });
   }
 
@@ -76,26 +81,35 @@ export default function LiveChatQuiz({ liveStream }) {
 
   return (
     <div className={styles.container}>
-      <form onSubmit={handleQuestion}>
-        <input
-          type="text"
-          placeholder="Question"
-          value={question}
-          onChange={(e) => setQuestion(e.target.value)}
-          required
-        />
-        <input
-          type="number"
-          placeholder="Seconds"
-          value={timer}
-          onChange={(e) => setTimer(e.target.value)}
-          required
-        />
-        <button>hit it</button>
-      </form>
-      {questionReponses ? (
-        <QuizResults questionResponses={questionReponses} />
-      ) : null}
+      <h2 className={styles.title}>Ask Your Chat a Question</h2>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <>
+          <form className={styles.formContainer} onSubmit={handleQuestion}>
+            <input
+              className={styles.questionInput}
+              type="text"
+              placeholder="Question"
+              value={question}
+              onChange={(e) => setQuestion(e.target.value)}
+              required
+            />
+            <input
+              className={styles.timerInput}
+              type="number"
+              placeholder="Seconds"
+              value={timer}
+              onChange={(e) => setTimer(e.target.value)}
+              required
+            />
+            <button className={styles.submitBtn}>{`>>`}</button>
+          </form>
+          {questionReponses ? (
+            <QuizResults questionResponses={questionReponses} />
+          ) : null}
+        </>
+      )}
     </div>
   );
 }

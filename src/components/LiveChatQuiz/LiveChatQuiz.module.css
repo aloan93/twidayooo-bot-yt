@@ -1,1 +1,77 @@
 @import "../../vars.css";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+}
+
+.title {
+  color: var(--colour-text);
+}
+
+.formContainer {
+  display: flex;
+  align-items: center;
+}
+
+.questionInput {
+  height: 40px;
+  width: 320px;
+  font-size: 18px;
+  border: 2px solid var(--colour-text);
+  border-right: 1px solid var(--colour-text);
+  padding-left: 8px;
+  background: var(--colour-dark);
+  color: var(--colour-secondary1);
+}
+
+.timerInput {
+  height: 40px;
+  width: 100px;
+  font-size: 18px;
+  border: 2px solid var(--colour-text);
+  border-left: none;
+  padding-left: 8px;
+  background: var(--colour-dark);
+  color: var(--colour-secondary1);
+}
+
+.submitBtn {
+  height: 40px;
+  width: 80px;
+  font-size: 18px;
+  border: 2px solid var(--colour-text);
+  border-left: none;
+  background: var(--colour-dark);
+  color: var(--colour-text);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  z-index: 1;
+  transition: 0.3s;
+}
+
+.submitBtn::before {
+  content: "";
+  width: 0;
+  height: 800%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  background: var(--colour-text);
+  transition: 0.5s ease;
+  display: block;
+  z-index: -1;
+}
+
+.submitBtn:hover::before {
+  width: 105%;
+}
+
+.submitBtn:hover {
+  cursor: pointer;
+  color: var(--colour-dark);
+}
