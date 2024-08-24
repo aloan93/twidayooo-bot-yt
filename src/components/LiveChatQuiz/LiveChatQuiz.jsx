@@ -26,7 +26,7 @@ export default function LiveChatQuiz({ liveStream }) {
             liveChatId: liveStream.snippet.liveChatId,
             type: "textMessageEvent",
             textMessageDetails: {
-              messageText: question,
+              messageText: question + " - " + timer + " seconds",
             },
           },
         },
