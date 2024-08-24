@@ -2,18 +2,19 @@ import { useState } from "react";
 import { youtubeApi } from "../../api/api";
 import useAuth from "../../hooks/useAuth";
 import styles from "./LiveChatQuiz.module.css";
+import QuizResults from "../QuizResults/QuizResults";
 
 export default function LiveChatQuiz({ liveStream }) {
   const { currentUser } = useAuth();
-  // const [nextPage, setNextPage] = useState(null);
-  const [question, setQuestion] = useState(null);
-  const [timer, setTimer] = useState(null);
+  const [question, setQuestion] = useState("");
+  const [timer, setTimer] = useState("");
   const [questionReponses, setQuestionResponses] = useState(null);
   const [pageMarker, setPageMarker] = useState(null);
 
   function handleQuestion(e) {
     e.preventDefault(e);
     console.log("starting...", question, timer);
+    setQuestionResponses(null);
     youtubeApi
       .post(
         `liveChat/messages`,
@@ -44,13 +45,14 @@ export default function LiveChatQuiz({ liveStream }) {
         ]);
       })
       .then((results) => {
-        console.log("HERE", results[1].data.items);
         return getChatReponses(results[1].data.nextPageToken);
       })
       .then(({ data: { items, nextPageToken } }) => {
-        console.log("time success", items);
+        console.log("time success");
         setPageMarker(nextPageToken);
-        setQuestionResponses(items);
+        setQuestionResponses({ question, responses: items });
+        setTimer("");
+        setQuestion("");
       })
       .catch((error) => {
         console.log("wrong", error);
@@ -62,18 +64,10 @@ export default function LiveChatQuiz({ liveStream }) {
       headers: { Authorization: `Bearer ${currentUser.token}` },
       params: {
         liveChatId: liveStream.snippet.liveChatId,
-        part: "snippet",
+        part: "snippet,authorDetails",
         pageToken: nextPage,
       },
     });
-    //   .then(({ data: { items, nextPageToken } }) => {
-    //     // setNextPage(results.data.nextPageToken);
-    //     console.log(items, nextPageToken);
-    //     return items;
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
   }
 
   function delay(ms) {
@@ -86,18 +80,22 @@ export default function LiveChatQuiz({ liveStream }) {
         <input
           type="text"
           placeholder="Question"
+          value={question}
           onChange={(e) => setQuestion(e.target.value)}
           required
         />
         <input
           type="number"
           placeholder="Seconds"
+          value={timer}
           onChange={(e) => setTimer(e.target.value)}
           required
         />
         <button>hit it</button>
       </form>
-      {/* <button onClick={getChatReponses}>get chats</button> */}
+      {questionReponses ? (
+        <QuizResults questionResponses={questionReponses} />
+      ) : null}
     </div>
   );
 }

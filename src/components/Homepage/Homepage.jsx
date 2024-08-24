@@ -26,7 +26,6 @@ export default function Homepage() {
           },
         })
         .then(({ data: { items } }) => {
-          console.log(items);
           items.length > 0 ? setLiveStream(items[0]) : setLiveStream(null);
           setIsLoading(false);
         })
