@@ -1,0 +1,51 @@
+@import "../../vars.css";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  border: 2px solid var(--colour-primary1);
+  padding: 25px 40px;
+}
+
+.title {
+  color: var(--colour-secondary1);
+  font-size: 20px;
+}
+
+.responseTotal {
+  color: var(--colour-secondary1);
+  font-size: 15px;
+}
+
+.noResponse {
+  color: var(--colour-text);
+  font-size: 15px;
+}
+
+.listContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  list-style-type: none;
+  margin-top: 20px;
+}
+
+.listEntry {
+  color: var(--colour-text);
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.entryValue {
+  font-size: 18px;
+}
+
+.entryPercentage {
+  font-style: italic;
+}
