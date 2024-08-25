@@ -7,11 +7,15 @@
   gap: 5px;
   border: 2px solid var(--colour-primary1);
   padding: 25px 40px;
+  width: 100%;
 }
 
 .title {
   color: var(--colour-secondary1);
   font-size: 20px;
+  overflow-wrap: break-word;
+  text-align: center;
+  width: 100%;
 }
 
 .responseTotal {
@@ -30,13 +34,14 @@
   align-items: flex-start;
   list-style-type: none;
   margin-top: 20px;
+  width: 100%;
 }
 
 .listEntry {
   color: var(--colour-text);
   display: flex;
   flex-direction: row;
-  gap: 20px;
+  gap: 10%;
   width: 100%;
   justify-content: space-between;
   align-items: center;
@@ -44,6 +49,8 @@
 
 .entryValue {
   font-size: 18px;
+  width: 75%;
+  overflow-wrap: break-word;
 }
 
 .entryPercentage {

@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import styles from "./Navbar.module.css";
 import useAuth from "../../hooks/useAuth";
 
@@ -7,13 +6,12 @@ export default function Navbar() {
 
   return (
     <nav className={styles.navbar}>
-      <h1>
-        <Link to="/" className={styles.navLink}>
-          Twidayoo Bot
-        </Link>
-      </h1>
+      <h1 className={styles.title}>Twidayooo Bot</h1>
       {currentUser?.user ? (
-        <p className={styles.loggedInUser}>{currentUser.user.displayName}</p>
+        <p
+          className={
+            styles.loggedInUser
+          }>{`Hello, ${currentUser.user.displayName}`}</p>
       ) : null}
     </nav>
   );
