@@ -7,7 +7,7 @@
   gap: 5px;
   border: 2px solid var(--colour-primary1);
   padding: 25px 40px;
-  width: 100%;
+  max-width: 100%;
 }
 
 .title {

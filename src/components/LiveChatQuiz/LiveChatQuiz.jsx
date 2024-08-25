@@ -5,6 +5,7 @@ import styles from "./LiveChatQuiz.module.css";
 import QuizResults from "../QuizResults/QuizResults";
 import Loader from "../Loader/Loader";
 import Error from "../Error/Error";
+import Countdown from "../Countdown/Countdown";
 
 export default function LiveChatQuiz({ liveStream }) {
   const { currentUser } = useAuth();
@@ -92,7 +93,10 @@ export default function LiveChatQuiz({ liveStream }) {
     <div className={styles.container}>
       <h2 className={styles.title}>Ask Your Chat a Question</h2>
       {isLoading ? (
-        <Loader />
+        <>
+          <Countdown timer={timer} />
+          <Loader />
+        </>
       ) : (
         <>
           <form className={styles.formContainer} onSubmit={handleQuestion}>
