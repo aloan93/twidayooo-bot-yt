@@ -2,8 +2,10 @@
 
 .navbar {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: flex-end;
+  row-gap: 5px;
   padding-top: 60px;
   margin: 0 10%;
   padding-bottom: 5px;
@@ -11,10 +13,9 @@
   color: var(--colour-text);
 }
 
-.navLink {
-  text-decoration: none;
+.title {
   color: var(--colour-secondary1);
-  transition: 0.3s;
+  margin-right: 30px;
 }
 
 .loggedInUser {

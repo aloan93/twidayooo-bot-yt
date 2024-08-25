@@ -1,0 +1,6 @@
+@import "../../vars.css";
+
+.countdown {
+  color: var(--colour-text);
+  font-size: 15px;
+}

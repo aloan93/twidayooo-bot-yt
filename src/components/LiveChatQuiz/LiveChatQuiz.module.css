@@ -5,20 +5,25 @@
   flex-direction: column;
   align-items: center;
   gap: 50px;
+  width: 90%;
 }
 
 .title {
   color: var(--colour-text);
+  text-align: center;
 }
 
 .formContainer {
   display: flex;
-  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 .questionInput {
   height: 40px;
   width: 320px;
+  max-width: 80%;
+  min-width: 150px;
   font-size: 18px;
   border: 2px solid var(--colour-text);
   border-right: 1px solid var(--colour-text);
@@ -74,4 +79,22 @@
 .submitBtn:hover {
   cursor: pointer;
   color: var(--colour-dark);
+}
+
+@media screen and (max-width: 740px) {
+  .formContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .questionInput {
+    border-right: 2px solid var(--colour-text);
+  }
+
+  .timerInput,
+  .submitBtn {
+    border-left: 2px solid var(--colour-text);
+    border-top: none;
+    width: 150px;
+  }
 }
