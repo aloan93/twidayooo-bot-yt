@@ -1,0 +1,8 @@
+@import "../../vars.css";
+
+.error {
+  white-space: pre-wrap;
+  line-height: 150%;
+  color: #faa0a0;
+  text-align: center;
+}
