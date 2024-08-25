@@ -6,16 +6,19 @@ import styles from "./Homepage.module.css";
 import { youtubeApi } from "../../api/api";
 import Loader from "../Loader/Loader";
 import LiveChatQuiz from "../LiveChatQuiz/LiveChatQuiz";
+import Error from "../Error/Error";
 
 export default function Homepage() {
   const { currentUser } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
+  const [err, setErr] = useState(null);
   const [liveStream, setLiveStream] = useState(null);
   const [refreshLiveCheck, setRefreshLiveCheck] = useState(false);
 
   useEffect(() => {
     if (currentUser?.user) {
       setIsLoading(true);
+      setErr(null);
       youtubeApi
         .get(`liveBroadcasts`, {
           headers: { Authorization: `Bearer ${currentUser.token}` },
@@ -29,10 +32,20 @@ export default function Homepage() {
           items.length > 0 ? setLiveStream(items[0]) : setLiveStream(null);
           setIsLoading(false);
         })
-        .catch((error) => {
-          console.log(error);
-          setIsLoading(false);
-        });
+        .catch(
+          ({
+            response: {
+              data: {
+                error: { code, status },
+              },
+            },
+          }) => {
+            setErr(
+              `Failed to retrieve livestream status...\n${code} - ${status}`
+            );
+            setIsLoading(false);
+          }
+        );
     }
   }, [currentUser, refreshLiveCheck]);
 
@@ -45,11 +58,15 @@ export default function Homepage() {
           ) : (
             <>
               <div className={styles.statusContainer}>
-                <p className={styles.statusText}>
-                  {liveStream
-                    ? `🔴 Currently Live!\n${liveStream.snippet.title}`
-                    : `Not Currently Live... 😴`}
-                </p>
+                {err ? (
+                  <Error err={err} />
+                ) : (
+                  <p className={styles.statusText}>
+                    {liveStream
+                      ? `🔴 Currently Live!\n${liveStream.snippet.title}`
+                      : `Not Currently Live... 😴`}
+                  </p>
+                )}
                 <button
                   className={styles.refreshBtn}
                   onClick={() => setRefreshLiveCheck(!refreshLiveCheck)}>
