@@ -32,20 +32,18 @@ export default function Homepage() {
           items.length > 0 ? setLiveStream(items[0]) : setLiveStream(null);
           setIsLoading(false);
         })
-        .catch(
-          ({
-            response: {
-              data: {
-                error: { code, status },
-              },
-            },
-          }) => {
-            setErr(
-              `Failed to retrieve livestream status...\n${code} - ${status}`
-            );
-            setIsLoading(false);
+        .catch((error) => {
+          {
+            error.response
+              ? setErr(
+                  `Failed to retrieve livestream status...\n${error.response.data.error.code} - ${error.response.data.error.status}`
+                )
+              : setErr(
+                  `Failed to retrieve livestream status...\nPlease try again later`
+                );
           }
-        );
+          setIsLoading(false);
+        });
     }
   }, [currentUser, refreshLiveCheck]);
 

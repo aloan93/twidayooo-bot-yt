@@ -4,6 +4,7 @@ import useAuth from "../../hooks/useAuth";
 import styles from "./LiveChatQuiz.module.css";
 import QuizResults from "../QuizResults/QuizResults";
 import Loader from "../Loader/Loader";
+import Error from "../Error/Error";
 
 export default function LiveChatQuiz({ liveStream }) {
   const { currentUser } = useAuth();
@@ -12,11 +13,12 @@ export default function LiveChatQuiz({ liveStream }) {
   const [questionReponses, setQuestionResponses] = useState(null);
   const [pageMarker, setPageMarker] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [err, setErr] = useState(null);
 
   function handleQuestion(e) {
     e.preventDefault(e);
-    console.log("starting...", question, timer);
     setIsLoading(true);
+    setErr(null);
     setQuestionResponses(null);
     youtubeApi
       .post(
@@ -51,7 +53,6 @@ export default function LiveChatQuiz({ liveStream }) {
         return getChatReponses(results[1].data.nextPageToken);
       })
       .then(({ data: { items, nextPageToken } }) => {
-        console.log("time success");
         setPageMarker(nextPageToken);
         setQuestionResponses({ question, responses: items });
         setTimer("");
@@ -59,7 +60,15 @@ export default function LiveChatQuiz({ liveStream }) {
         setIsLoading(false);
       })
       .catch((error) => {
-        console.log("wrong", error);
+        setTimer("");
+        setQuestion("");
+        {
+          error.response
+            ? setErr(
+                `Failed to post question...\n${error.response.data.error.code} - ${error.response.data.error.status}`
+              )
+            : setErr(`Failed to post question...\nPlease try again later`);
+        }
         setIsLoading(false);
       });
   }
@@ -105,6 +114,7 @@ export default function LiveChatQuiz({ liveStream }) {
             />
             <button className={styles.submitBtn}>{`>>`}</button>
           </form>
+          {err ? <Error err={err} /> : null}
           {questionReponses ? (
             <QuizResults questionResponses={questionReponses} />
           ) : null}
