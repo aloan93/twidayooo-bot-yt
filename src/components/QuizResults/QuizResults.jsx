@@ -1,15 +1,13 @@
-import useAuth from "../../hooks/useAuth";
 import styles from "./QuizResults.module.css";
 
 export default function QuizResults({ questionResponses }) {
-  const { currentUser } = useAuth();
   const question = questionResponses.question;
 
   // populates authors and messages to responseData whilst ensuring no author has more than one response
   const responseData = {};
 
   for (let response of questionResponses.responses) {
-    if (response.authorDetails.displayName !== currentUser.user.displayName) {
+    if (!response.authorDetails.isChatOwner) {
       responseData[response.authorDetails.displayName] =
         response.snippet.displayMessage.trim().toLowerCase();
     }
